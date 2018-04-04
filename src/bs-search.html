@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="components/bs-search-box.html">
+<link rel="import" href="components/bs-book-list-service.html">
+<link rel="import" href="components/bs-book-list.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="bs-search">
@@ -38,6 +40,13 @@
         <bs-search-box
           query="[[_routeData.query]]">
         </bs-search-box>
+        <bs-book-list-service
+          query="[[_routeData.query]]"
+          books={{_books}}>
+        </bs-book-list-service>
+        <bs-book-list
+          books=[[_books]]>
+        </bs-book-list>
       </div>
     </div>
   </template>
@@ -55,6 +64,7 @@
             type: String,
           },
           _routeData: Object,
+          _books: Array,
         };
       }
 

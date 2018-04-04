@@ -1,0 +1,43 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="bs-book-list-item.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="bs-book-list">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+    <div id="book-list-container">
+      <template
+        is="dom-repeat"
+        items="[[books]]">
+        <bs-book-list-item
+          book=[[item]]>
+        </bs-book-list-item>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    class BsBookList extends Polymer.Element {
+      static get is() { return 'bs-book-list'; }
+
+      static get properties() {
+        return {
+
+          /**
+           * Book data to display
+           */
+
+          books: {
+            type: Array,
+          }
+        };
+      }
+    }
+
+    window.customElements.define(BsBookList.is, BsBookList);
+  </script>
+</dom-module>

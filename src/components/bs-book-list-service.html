@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="bs-book-list-service">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+
+  </template>
+
+  <script>
+    class BsBookListService extends Polymer.Element {
+      static get is() { return 'bs-book-list-service'; }
+
+      static get properties() {
+        return {
+
+          /**
+           * Query to filter for
+           */
+
+          query: {
+            type: String,
+            observer: '_onQueryChanged',
+          },
+
+          /**
+           * Book data returned by the Google Books API
+           */
+
+          books: {
+            type: Array,
+            notify: true,
+          }
+        };
+      }
+
+      async _onQueryChanged(query) {
+        this.books = await this._getBooks(query);
+      }
+
+      async _getBooks(query) {
+        const API_URL = 'https://www.googleapis.com/books/v1/volumes';
+        try {
+          const response = await fetch(`${API_URL}?q=${query}`);
+          const data = await response.json();
+          return data.items;
+        } catch (error) {
+          //TODO: proper error handling
+          console.error('Error loading list of books');
+          return null;
+        }
+      }
+    }
+
+    window.customElements.define(BsBookListService.is, BsBookListService);
+  </script>
+</dom-module>

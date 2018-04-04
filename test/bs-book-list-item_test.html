@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>bs-search</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../src/components/bs-book-list-item.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <bs-book-list-item
+          book='
+            {
+              "id": 2,
+              "volumeInfo": {
+                "authors": ["fake author 1", "fake author 2"],
+                "title": "fake title 2",
+                "averageRating": 1.2
+              }}'>
+        </bs-book-list-item>
+      </template>
+    </test-fixture>
+
+    <script>
+      describe('bs-book-list-item', function() {
+        describe('authors', function() {
+          it(`should concatenate and display the array of authors`, function() {
+            const item = fixture('basic');
+            expect(item.shadowRoot.querySelector('#authors').innerText).to.equal('fake author 1, fake author 2');
+          });
+          it(`should display 'Unknown author' if th the array of authors is missing`, function() {
+            const item = fixture('basic');
+            item.book = {
+              id: 2,
+              volumeInfo: {
+                title: 'fake title 2',
+                averageRating: 1.2,
+              },
+            };
+            expect(item.shadowRoot.querySelector('#authors').innerText).to.equal('Unknown author');
+          });
+        });
+        describe('title', function() {
+          it(`should display the title of the book`, function() {
+            const item = fixture('basic');
+            expect(item.shadowRoot.querySelector('#title').innerText).to.equal('fake title 2');
+          });
+        });
+        describe('link to the details page', function() {
+          it(`should link to the details page of the book`, function() {
+            const item = fixture('basic');
+            expect(item.shadowRoot.querySelector('a').href.indexOf('/book/2') > 0).to.equal(true);
+          });
+          it(`should contain a human readable part generated from the book's title`, function() {
+            const item = fixture('basic');
+            expect(item.shadowRoot.querySelector('a').href.endsWith('/fake-title-2')).to.equal(true);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
