@@ -38,10 +38,10 @@
           <h1>Search for books</h1>
         </header>
         <bs-search-box
-          query="[[_routeData.query]]">
+          query="[[_query]]">
         </bs-search-box>
         <bs-book-list-service
-          query="[[_routeData.query]]"
+          query="[[_query]]"
           books={{_books}}>
         </bs-book-list-service>
         <bs-book-list
@@ -57,15 +57,21 @@
 
       static get properties() {
         return {
-          subroute: {
+          subroute: Object,
+          _query: {
             type: String,
+            value: '',
           },
-          query: {
-            type: String,
-          },
+          _routeActive: Boolean,
           _routeData: Object,
           _books: Array,
         };
+      }
+
+      static get observers() {
+        return [
+          '_onRouteChanged(_routeData)',
+        ]
       }
 
       _onSearch(event) {
@@ -76,6 +82,13 @@
       _updateQueryInUrl(query) {
         window.history.pushState({}, null, `${this.subroute.prefix}/${query}`);
         window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+
+      _onRouteChanged(_routeData) {
+        if (!this.subroute || this.subroute.prefix !== '/search' || !_routeData.query) {
+          return;
+        }
+        this._query = _routeData.query;
       }
 
     }
