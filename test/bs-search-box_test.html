@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>bs-search</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../src/components/bs-search-box.html">
+  </head>
+  <body>
+    <test-fixture id="BasicView">
+      <template>
+        <bs-search-box></bs-search-box>
+      </template>
+    </test-fixture>
+    <test-fixture id="withQuery">
+      <template>
+        <bs-search-box
+          query="something"></bs-search-box>
+      </template>
+    </test-fixture>
+
+    <script>
+      describe('bs-search-box', function() {
+        it(`should set the textbox's value on instanciation`, function() {
+          const searchView = fixture('withQuery');
+          const input = searchView.shadowRoot.querySelector('paper-input');
+          expect(input.value).to.equal('something');
+        });
+        it(`should change the textbox's value when the query attribute changes`, function() {
+          const searchView = fixture('withQuery');
+          searchView.query = 'other query';
+          const input = searchView.shadowRoot.querySelector('paper-input');
+          expect(input.value).to.equal('other query');
+        });
+        it('should fire an event with the query when the button is clicked', function(done) {
+          const searchView = fixture('BasicView');
+          searchView._currentSearchValue = 'some query';
+          searchView.addEventListener('bs-search', (event) => {
+            expect(event.detail.query).to.equal('some query');
+            done();
+          }, { once: true });
+          searchView.shadowRoot.querySelector('paper-button').click();
+        });
+      });
+    </script>
+  </body>
+</html>

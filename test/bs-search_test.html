@@ -20,10 +20,10 @@
 
     <script>
       describe('bs-search', function() {
-        it('should have the title `Search View`', function() {
+        it('should have the proper title', function() {
           const searchView = fixture('BasicView');
           const header = searchView.shadowRoot.querySelector('h1');
-          expect(header.textContent).to.equal('Search View');
+          expect(header.textContent).to.equal('Search for books');
         });
       });
     </script>

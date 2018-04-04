@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="bs-search-box">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+      }
+    </style>
+
+    <paper-input
+      label="Search for books"
+      no-label-float
+      value="{{_currentSearchValue}}"
+      on-keydown="_onKeyDown">
+    </paper-input>
+    <paper-button
+      on-tap="search">
+      Search
+    </paper-button>
+  </template>
+
+  <script>
+    class BsSearchBox extends Polymer.Element {
+      static get is() { return 'bs-search-box'; }
+
+      static get properties() {
+        return {
+          _currentSearchValue: {
+            type: String,
+          },
+
+          /**
+           * Query to be displayed in the search box 
+           */
+          query: {
+            type: String,
+            observer: '_onQueryChanged',
+          },
+        };
+      }
+
+      /**
+       * @event bs-search
+       * Fires a bs-search event with the query
+       */
+
+      search() {
+        const query = this._currentSearchValue;
+        this.dispatchEvent(new CustomEvent('bs-search', {
+          detail: {
+            query,
+          },
+          bubbles: true,
+          composed: true,
+        }));
+      }
+
+      _onQueryChanged(query) {
+        this._currentSearchValue = query;
+      }
+
+      _onKeyDown(event) {
+        const ENTER_KEYCODE = 13;
+        if (event.keyCode === ENTER_KEYCODE) {
+          this.search();
+        }
+      }
+    }
+
+    window.customElements.define(BsSearchBox.is, BsSearchBox);
+  </script>
+</dom-module>
