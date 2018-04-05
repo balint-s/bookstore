@@ -3,7 +3,7 @@
 <link rel="import" href="components/bs-book-service.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="bs-book">
+<dom-module id="bs-book-details">
   <template>
     <style include="shared-styles">
       :host {
@@ -36,8 +36,8 @@
   </template>
 
   <script>
-    class BsBook extends Polymer.Element {
-      static get is() { return 'bs-book'; }
+    class BsBookDetails extends Polymer.Element {
+      static get is() { return 'bs-book-details'; }
 
       static get properties() {
         return {
@@ -55,13 +55,13 @@
       }
 
     _onRouteChanged(_routeData) {
-      if (!this.subroute || this.subroute.prefix !== '/book' || !_routeData.id) {
+      if (!this.subroute || this.subroute.prefix !== '/book-details' || !_routeData.id) {
         return;
       }
       this._id = _routeData.id;
     }
   }
 
-    window.customElements.define(BsBook.is, BsBook);
+    window.customElements.define(BsBookDetails.is, BsBookDetails);
   </script>
 </dom-module>

@@ -13,7 +13,7 @@
 <link rel="import" href="components/bs-icons.html">
 
 <link rel="lazy-import" href="bs-search.html">
-<link rel="lazy-import" href="bs-book.html">
+<link rel="lazy-import" href="bs-book-details.html">
 <link rel="lazy-import" href="bs-shopping-cart.html">
 <link rel="lazy-import" href="bs-view404.html">
 
@@ -76,7 +76,7 @@
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="search" href="[[rootPath]]search">Search</a>
-          <a name="book" href="[[rootPath]]book">Book</a>
+          <a name="book-details" href="[[rootPath]]book-details">Book</a>
           <a name="shopping-cart" href="[[rootPath]]shopping-cart">Shopping Cart</a>
         </iron-selector>
       </app-drawer>
@@ -98,10 +98,12 @@
             role="main">
           <bs-search
             name="search"
-            subroute="[[subroute]]"></bs-search>
-          <bs-book
-            name="book"
-            subroute="[[subroute]]"></bs-book>
+            subroute="[[subroute]]">
+          </bs-search>
+          <bs-book-details
+            name="book-details"
+            subroute="[[subroute]]">
+          </bs-book-details>
           <bs-shopping-cart name="shopping-cart"></bs-shopping-cart>
           <bs-view404 name="view404"></bs-view404>
         </iron-pages>

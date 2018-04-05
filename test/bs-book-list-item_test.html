@@ -55,7 +55,7 @@
         describe('link to the details page', function() {
           it(`should link to the details page of the book`, function() {
             const item = fixture('basic');
-            expect(item.shadowRoot.querySelector('a').href.indexOf('/book/2') > 0).to.equal(true);
+            expect(item.shadowRoot.querySelector('a').href.indexOf('/book-details/2') > 0).to.equal(true);
           });
           it(`should contain a human readable part generated from the book's title`, function() {
             const item = fixture('basic');
