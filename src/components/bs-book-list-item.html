@@ -6,7 +6,6 @@
   <template>
     <style include="shared-styles">
       #book-container {
-        display: flex;
         margin-top: 12px;
         margin-bottom: 12px;
         padding: 5px;
@@ -25,7 +24,7 @@
         text-decoration: underline;
       }
     </style>
-    <div id="book-container">
+    <div id="book-container" class="flex">
       <div id="icon" class="detail" aria-labelledby="closed book">📕</div>
       <div id="authors" class="detail">
         [[_authors]]
