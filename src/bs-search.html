@@ -69,7 +69,7 @@
       }
 
       _updateQueryInUrl(query) {
-        window.history.pushState({}, null, `${this.subroute.prefix}/${query}`);
+        window.history.pushState({}, null, `/search/${query}`);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
 
