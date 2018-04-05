@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="components/bs-book-service.html">
 <link rel="import" href="components/bs-book-full-item.html">
+<link rel="import" href="components/bs-cart-service.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="bs-book-details">
@@ -29,6 +30,15 @@
       data="{{_routeData}}">
     </app-route>
 
+    <bs-book-service
+      identifier="[[_id]]"
+      book={{_book}}>
+    </bs-book-service>
+
+    <bs-cart-service
+      id="cartService">
+    </bs-cart-service>
+
     <div class="card">
       <header>
         <div class="circle">
@@ -38,10 +48,6 @@
         </div>
         <h1>Book details</h1>
       </header>
-      <bs-book-service
-        identifier="[[_id]]"
-        book={{_book}}>
-      </bs-book-service>
       <template
         is="dom-if"
         if="{{_book}}">
@@ -53,6 +59,7 @@
             <paper-button
               on-tap="_addToCart"
               raised
+              hidden$="[[_isBookInCart]]"
               class="green">
               Add to cart
             </paper-button>
@@ -83,7 +90,11 @@
             type: Object,
             observer: '_onRouteChanged',
           },
-          _book: Object,
+          _book: {
+            type: Object,
+            observer: '_onBookChanged',
+          },
+          _isBookInCart: Boolean,
         };
       }
 
@@ -92,6 +103,18 @@
         return;
       }
       this._id = _routeData.id;
+    }
+
+    _onBookChanged(book) {
+      if (!book) {
+        return;
+      }
+      this._isBookInCart = this.$.cartService.isInCart(book);
+    }
+
+    _addToCart() {
+      this.$.cartService.addToCart(this._book);
+      this._isBookInCart = true;
     }
   }
 
