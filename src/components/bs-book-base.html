@@ -73,7 +73,7 @@
       }
 
       _getImageUrl(book) {
-        return book.volumeInfo.imageLinks.thumbnail;
+        return book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : null;
       }
 
     }
