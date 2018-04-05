@@ -1,13 +1,29 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="bs-cart-service">
+  <!--
+    Distributed Shopping Cart service
+    Every Instance of the service notifies the other instances of the changes
+    and persists the data to the localStorage
+  -->
 
   <script>
     class BsCartService extends Polymer.Element {
 
       constructor() {
         super();
-        this._books = new Map();
+        this._loadData();
+        this._boundListener = this._listener.bind(this);
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+        window.addEventListener('bs-add-to-cart', this._boundListener);
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        window.removeEventListener('bs-add-to-cart', this._boundListener);
       }
 
       static get is() { return 'bs-cart-service'; }
@@ -27,12 +43,48 @@
       }
 
       addToCart(book) {
-        this._books.set(book.id, book);
-        this.books = Array.from(this._books);
+        this._save(book);
+        this._persistData();
+        this._fire(book);
       }
 
       isInCart(book) {
         return this._books.has(book.id);
+      }
+
+      _save(book) {
+        this._books.set(book.id, book);
+        this.books = this._getBooks();
+      }
+
+      _fire(book) {
+        /* notify other instances of the service of the change */
+        window.dispatchEvent(new CustomEvent('bs-add-to-cart', {
+          detail: {
+            book
+          }
+        }));
+      }
+
+      _listener(event) {
+        this._save(event.detail.book);
+      }
+
+      _persistData() {
+        window.localStorage.setItem('cart', JSON.stringify(this._getBooks()));
+      }
+
+      _loadData() {
+        this._books = new Map();
+        const savedCart = JSON.parse(window.localStorage.getItem('cart')) || [];
+        for (let book of savedCart) {
+          this._books.set(book.id, book);
+        }
+        this.books = this._getBooks();
+      }
+
+      _getBooks() {
+        return Array.from(this._books.values());
       }
     }
 
