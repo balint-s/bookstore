@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="components/bs-book-service.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="bs-book">
@@ -10,18 +12,55 @@
       }
     </style>
 
+    <app-route
+      route="[[subroute]]"
+      pattern="/:id"
+      data="{{_routeData}}">
+    </app-route>
+
     <div class="card">
-      <div class="circle">B</div>
-      <h1>Book details view</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      <header>
+        <div class="circle">
+          <span aria-labelledby="closed book">
+            📕
+          </span>
+        </div>
+        <h1>Book details</h1>
+      </header>
+      <bs-book-service
+        identifier="[[_id]]"
+        book={{_book}}>
+      </bs-book-service>
+      [[_book.id]]
     </div>
   </template>
 
   <script>
     class BsBook extends Polymer.Element {
       static get is() { return 'bs-book'; }
+
+      static get properties() {
+        return {
+          subroute: Object,
+          _id: {
+            type: String,
+            value: '',
+          },
+          _routeData: {
+            type: Object,
+            observer: '_onRouteChanged',
+          },
+          _book: Object,
+        };
+      }
+
+    _onRouteChanged(_routeData) {
+      if (!this.subroute || this.subroute.prefix !== '/book' || !_routeData.id) {
+        return;
+      }
+      this._id = _routeData.id;
     }
+  }
 
     window.customElements.define(BsBook.is, BsBook);
   </script>

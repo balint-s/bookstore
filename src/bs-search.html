@@ -12,13 +12,6 @@
         display: block;
         padding: 10px;
       }
-      header {
-        display: flex;
-        margin-bottom: 20px;
-      }
-      header>* {
-        margin-right: 10px;
-      }
     </style>
     <div
       on-bs-search="_onSearch">
@@ -62,16 +55,12 @@
             type: String,
             value: '',
           },
-          _routeActive: Boolean,
-          _routeData: Object,
+          _routeData: {
+            type: Object,
+            observer: '_onRouteChanged',
+          },
           _books: Array,
         };
-      }
-
-      static get observers() {
-        return [
-          '_onRouteChanged(_routeData)',
-        ]
       }
 
       _onSearch(event) {

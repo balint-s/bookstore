@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="bs-book-service-base.html">
+
+<dom-module id="bs-book-service">
+
+  <script>
+    class BsBookService extends BsBookServiceBase {
+      static get is() { return 'bs-book-service'; }
+
+      static get properties() {
+        return {
+
+          /**
+           * Identifier of the book
+           */
+
+          identifier: {
+            type: String,
+            observer: '_onIdChanged',
+          },
+
+          /**
+           * Book data returned by the Google Books API
+           */
+
+          book: {
+            type: Object,
+            notify: true,
+          }
+        };
+      }
+
+      async _onIdChanged(id) {
+        this.book = await this._getBook(id);
+      }
+
+      async _getBook(id) {
+        if (!id) {
+          return null;
+        }
+        try {
+          const response = await fetch(`${this.API_URL}/${id}`);
+          return await response.json();
+        } catch (error) {
+          //TODO: proper error handling
+          console.error('Error loading book');
+          return null;
+        }
+      }
+    }
+
+    window.customElements.define(BsBookService.is, BsBookService);
+  </script>
+</dom-module>

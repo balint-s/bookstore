@@ -98,8 +98,10 @@
             role="main">
           <bs-search
             name="search"
-            subroute="{{subroute}}"></bs-search>
-          <bs-book name="book"></bs-book>
+            subroute="[[subroute]]"></bs-search>
+          <bs-book
+            name="book"
+            subroute="[[subroute]]"></bs-book>
           <bs-shopping-cart name="shopping-cart"></bs-shopping-cart>
           <bs-view404 name="view404"></bs-view404>
         </iron-pages>
