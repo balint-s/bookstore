@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<!-- Base Class that extracts and formats the fields from the Google Books API response -->
+<dom-module id="bs-book-base">
+
+  <script>
+    class BsBookBase extends Polymer.Element {
+      static get is() { return 'bs-book-base'; }
+
+      static get properties() {
+        return {
+
+          /**
+           * Book to display
+           */
+
+          book: {
+            type: Object,
+          },
+
+          _authors: {
+            type: String,
+            computed: '_computeAuthors(book)',
+          },
+
+          _title: {
+            type: String,
+            computed: '_computeTitle(book)',
+          },
+
+          _urlFriendlyTitle: {
+            type: String,
+            computed: '_computeURLFrielndlyTitle(book)'
+          },
+
+          _rating: {
+            type: String,
+            computed: '_computeRating(book)',
+          },
+
+          _id: {
+            type: String,
+            computed: '_computeId(book)',
+          },
+        };
+      }
+
+      _computeAuthors(book) {
+        const authorList = book.volumeInfo.authors || ['Unknown author'];
+        return authorList.join(', ');
+      }
+
+      _computeTitle(book) {
+        return book.volumeInfo.title;
+      }
+
+      _computeURLFrielndlyTitle(book) {
+        const { title } = book.volumeInfo;
+        return title.replace(/\W/g, '-');
+      }
+
+      _computeRating(book) {
+        return book.volumeInfo.averageRating || 'no rating';
+      }
+
+      _computeId(book) {
+        return book.id;
+      }
+
+    }
+
+    window.customElements.define(BsBookBase.is, BsBookBase);
+  </script>
+</dom-module>
