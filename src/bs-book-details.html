@@ -1,5 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="components/bs-book-service.html">
 <link rel="import" href="components/bs-book-full-item.html">
 <link rel="import" href="shared-styles.html">
@@ -10,6 +12,14 @@
       :host {
         display: block;
         padding: 10px;
+      }
+      bs-book-full-item {
+        min-width: 300px;
+      }
+      paper-button.green {
+        margin: 5px;
+        background-color: var(--paper-green-500);
+        color: white;
       }
     </style>
 
@@ -35,9 +45,19 @@
       <template
         is="dom-if"
         if="{{_book}}">
-        <bs-book-full-item
-          book=[[_book]]>
-        </bs-book-full-item>
+        <div class="flex">
+          <bs-book-full-item
+            book=[[_book]]>
+          </bs-book-full-item>
+          <div>
+            <paper-button
+              on-tap="_addToCart"
+              raised
+              class="green">
+              Add to cart
+            </paper-button>
+          </div>
+        </div>
       </template>
       <template
         is="dom-if"

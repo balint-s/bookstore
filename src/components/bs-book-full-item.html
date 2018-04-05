@@ -5,10 +5,6 @@
 <dom-module id="bs-book-full-item">
   <template>
     <style include="shared-styles">
-      #book-container {
-        display: flex;
-        flex-wrap: wrap;
-      }
       #book-details {
         margin: 5px; 
       }
@@ -16,7 +12,7 @@
         font-weight: 800;
       }
     </style>
-    <div id="book-container">
+    <div id="book-container" class="flex">
       <img
         id="cover"
         src="[[_imageUrl]]">
