@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="bs-book-base.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="bs-book-full-item">
+  <template>
+    <style include="shared-styles">
+      #book-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      #book-details {
+        margin: 5px; 
+      }
+      #title {
+        font-weight: 800;
+      }
+    </style>
+    <div id="book-container">
+      <img
+        id="cover"
+        src="[[_imageUrl]]">
+      </img>
+      <div id="book-details">
+        <div id="title" class="detail">
+          [[_title]]
+        </div>
+        <div>
+          <span>by</span>
+          <span>[[_authors]]</span>
+        </div>
+        <div id="rating" class="detail">
+          <span aria-labelledby="star">⭐</span>
+          [[_rating]]
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class BsBookFullItem extends BsBookBase {
+      static get is() { return 'bs-book-full-item'; }
+
+    }
+
+    window.customElements.define(BsBookFullItem.is, BsBookFullItem);
+  </script>
+</dom-module>
