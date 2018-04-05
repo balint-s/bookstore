@@ -1,23 +1,18 @@
 # Bookstore App
 
-Google Books API demo app built with [Polymer 2.0](https://www.polymer-project.org/)
+Google Books API demo app built with Google's [Polymer 2.0](https://www.polymer-project.org/)
+Deployed to Firebase
 
 #### Prerequisites
 
-First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
-[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
-
     npm install -g polymer-cli
-
-Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
-
     npm install -g bower
+    npm install -g firebase-tools
 
 
 ### Start the development server
 
-This command serves the app at `http://127.0.0.1:8081` and provides basic URL
-routing for the app:
+This command serves the app at `http://127.0.0.1:8081`
 
     polymer serve
 
