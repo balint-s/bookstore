@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="components/bs-cart-service.html">
+<link rel="import" href="components/bs-book-list.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="bs-shopping-cart">
@@ -11,16 +13,32 @@
     </style>
 
     <div class="card">
-      <div class="circle">C</div>
-      <h1>Shopping Cart View</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      <header>
+        <div class="circle">
+          <span aria-labelledby="shopping cart">
+            🛒
+          </span>
+        </div>
+        <h1>Cart</h1>
+      </header>
+      <bs-cart-service
+        books="{{_books}}">
+      </bs-cart-service>
+      <bs-book-list
+        books="[[_books]]">
+      </bs-book-list>
     </div>
   </template>
 
   <script>
     class BsShoppingCart extends Polymer.Element {
       static get is() { return 'bs-shopping-cart'; }
+
+      static get properties() {
+        return {
+          _books: Array,
+        };
+      }
     }
 
     window.customElements.define(BsShoppingCart.is, BsShoppingCart);
