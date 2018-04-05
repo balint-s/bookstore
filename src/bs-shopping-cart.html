@@ -27,6 +27,9 @@
       <bs-book-list
         books="[[_books]]">
       </bs-book-list>
+      <div hidden$="[[!_isEmpty(_books)]]">
+        Your cart is empty. Let's find <a href="/search/Hemingway">some cool books</a> to buy.
+      </div>
     </div>
   </template>
 
@@ -38,6 +41,10 @@
         return {
           _books: Array,
         };
+      }
+
+      _isEmpty(books) {
+        return !books.length;
       }
     }
 
