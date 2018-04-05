@@ -22,7 +22,7 @@
       describe('bs-book-list-service', function() {
         it(`should make a GET request for the right URL when the query changes`, function(done) {
           fetch = function fetchSpy(url) {
-            expect(url).to.equal('https://www.googleapis.com/books/v1/volumes?q=something')
+            expect(url.startsWith('https://www.googleapis.com/books/v1/volumes?q=something')).to.equal(true);
             done();
           }
           const service = fixture('basic');

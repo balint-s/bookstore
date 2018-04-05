@@ -39,7 +39,7 @@
           return null;
         }
         try {
-          const response = await fetch(`${this.API_URL}/${id}`);
+          const response = await fetch(`${this.API_URL}/${id}?key=${this.API_KEY}`);
           return await response.json();
         } catch (error) {
           //TODO: proper error handling
