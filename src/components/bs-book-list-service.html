@@ -1,17 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="bs-book-service-base.html">
 
 <dom-module id="bs-book-list-service">
-  <template>
-    <style>
-      :host {
-        display: none;
-      }
-    </style>
-
-  </template>
 
   <script>
-    class BsBookListService extends Polymer.Element {
+    class BsBookListService extends BsBookServiceBase {
       static get is() { return 'bs-book-list-service'; }
 
       static get properties() {
@@ -45,9 +38,8 @@
         if (!query) {
           return null;
         }
-        const API_URL = 'https://www.googleapis.com/books/v1/volumes';
         try {
-          const response = await fetch(`${API_URL}?q=${query}`);
+          const response = await fetch(`${this.API_URL}?q=${query}`);
           const data = await response.json();
           return data.items;
         } catch (error) {
