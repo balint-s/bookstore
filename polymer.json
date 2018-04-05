@@ -3,9 +3,9 @@
   "shell": "src/bs-app.html",
   "fragments": [
     "src/bs-search.html",
-    "src/bs-book.html",
+    "src/bs-book-details.html",
     "src/bs-shopping-cart.html",
-    "src/my-view404.html"
+    "src/bs-view404.html"
   ],
   "sources": [
     "images/**/*",
