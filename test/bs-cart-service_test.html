@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>bs-cart-service</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../src/components/bs-cart-service.html">
+  </head>
+  <body>
+    <test-fixture id="basic1">
+      <template>
+        <bs-cart-service></bs-cart-service>
+      </template>
+    </test-fixture>
+    <test-fixture id="basic2">
+      <template>
+        <bs-cart-service></bs-cart-service>
+      </template>
+    </test-fixture>
+
+    <script>
+      describe('bs-cart-service', function() {
+        beforeEach(function() {
+          localStorage.clear();
+        });
+        it('should replicate cart content to the other service instance', function() {
+          const fakeBook = {
+            id: 1,
+          };
+          const service1 = fixture('basic1');
+          const service2 = fixture('basic2');
+          service1.addToCart(fakeBook);
+          expect(service2.books[0].id).to.equal(1);
+        });
+        it('should save cart content to local storage', function() {
+          const service = fixture('basic1');
+          const fakeBook = {
+            id: 2,
+          };
+          service.addToCart(fakeBook);
+          const localStorageContent = JSON.parse(localStorage.getItem('cart'));
+          expect(localStorageContent[0].id).to.equal(2);
+        });
+        it('should load the cart content from local storage when instanciated', function() {
+          const fakeBook = {
+            id: 3,
+          };
+          localStorage.setItem('cart', JSON.stringify([fakeBook]));
+          const service = fixture('basic1');
+          expect(service.books[0].id).to.equal(3);
+        });
+      });
+    </script>
+  </body>
+</html>
